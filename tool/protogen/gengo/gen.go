@@ -4,15 +4,18 @@ import (
 	"fmt"
 	"github.com/davyxu/protoplus/codegen"
 	"github.com/davyxu/protoplus/gen"
+	"strings"
 )
 
-func GenGo(ctx *gen.Context) error {
+func GenCode(ctx *gen.Context,temp string) error {
 
 	gen := codegen.NewCodeGen("cmgo").
 		RegisterTemplateFunc(codegen.UsefulFunc).
 		RegisterTemplateFunc(FuncMap).
-		ParseTemplate(goCodeTemplate, ctx).
-		FormatGoCode()
+		ParseTemplate(temp, ctx)
+	if strings.Contains(temp,"go") {
+		gen.FormatGoCode()
+	}
 
 	if gen.Error() != nil {
 		fmt.Println(string(gen.Code()))

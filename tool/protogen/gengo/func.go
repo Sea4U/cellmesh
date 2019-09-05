@@ -15,11 +15,22 @@ func init() {
 	FuncMap["StructCodec"] = func(d *model.Descriptor) string {
 		return d.TagValueString("Codec")
 	}
-
+	FuncMap["ClientMod"] = func(d *model.Descriptor)string {
+		return  d.TagValueString("CMod")
+	}
 	FuncMap["StructService"] = func(d *model.Descriptor) string {
 		return d.TagValueString("Service")
 	}
-
+	FuncMap["MsgType"]  = func(d *model.Descriptor,parm string) bool {
+		//if strings.Contains(d.Name,"ACK") {
+		//	return  "ACK"
+		//}else if strings.Contains(d.Name ,"REQ") {
+		//	return  "REQ"
+		//}else{
+		//	return  "UnKnow"
+		//}
+	 return  strings.Contains(d.Name,parm)
+	}
 	FuncMap["ProtoImportList"] = func(ctx *gen.Context) (ret []string) {
 
 		linq.From(ctx.Structs()).WhereT(func(d *model.Descriptor) bool {
